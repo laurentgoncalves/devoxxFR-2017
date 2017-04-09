@@ -6,8 +6,8 @@
 |===
 |Date				|Salle				|Type				|Description
 |09:30 / 12:30		|Amphi bleu		    |University			|link:mercredi-modularite-java9.adoc[Préparez-vous à la modularité selon Java 9]
-|13:30 / 16:30		|Paris 242-AB		|University			|link:mercredimicro-angular.adoc[Java EE, MicroProfile, TypeScript et Angular 2]
-|17:10 / 17:40		|Neuilly 251		|Tools-in-Action	|link:mercredireact-native.adoc[React Native ou comment faire une application iOS & Android quand on est développeur Web]
+|13:30 / 16:30		|Paris 242-AB		|University			|link:mercredi-micro-angular.adoc[Java EE, MicroProfile, TypeScript et Angular 2]
+|17:10 / 17:40		|Neuilly 251		|Tools-in-Action	|link:mercredi-react-native.adoc[React Native ou comment faire une application iOS & Android quand on est développeur Web]
 |17:55 / 18:25		|Paris 243  		|Tools-in-Action	|link:mercredi-eclipse-che.adoc[Introduction à Eclipse Che]
 |18:40 / 19:10		|Paris 243			|Tools-in-Action	|link:mercredi-react-storybook.adoc[React Sotrybook : Concevoir, Développer, Documenter et Débugguer ses composants d'interface React]
 |===

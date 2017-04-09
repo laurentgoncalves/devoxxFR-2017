@@ -122,6 +122,7 @@ Image docker : on peut dialoguer avec le port 2375 en branchant le daemon local 
 
 == Ressources
 Traefik : reverse proxy
+
 Source du code du talk :
-github.com/agoncal
-github.com/Mimetis/UniversityDevoxx
+https://github.com/agoncal
+https://github.com/Mimetis/UniversityDevoxx

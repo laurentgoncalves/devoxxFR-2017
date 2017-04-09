@@ -29,10 +29,13 @@ Le descripteur de module comme tout fichier java sera compilé.
 Le mot-clé "open" dans la déclaration d'un module permet d'autoriser l'utilisation d'un module deprecated.
 La ligne de commande java contient l'option --module-path en plus du --class-path
 Pour désigner le module à exécuter option "-m"
+
 == Passer une application java 8 en Java 9
+
 === Déclarer le module
 Création d'un fichier module-info.java avec le nommage du module et les dépendances
 Définir dans le module ce qui est accessible à l'extérieur du module avec le mot clé "export" pointant sur les packages à publier
+
 === découper notre application en module
 Créer les modules dans des répertoires différents.
 Rajouter les dépendances entre modules externes mais aussi internes.

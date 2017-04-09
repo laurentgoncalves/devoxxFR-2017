@@ -1,0 +1,120 @@
+= La modularité de Java 9 (aka jigsaw) 
+:toc:
+:toclevels: 3
+:toc-placement: preamble
+:lb: pass:[<br> +]
+:imagesdir: images
+:icons: font
+:source-highlighter: highlightjs
+
+Présenté par Remi Forax et Alexis Hassler +
+
+== Introduction
+Dans les JDK avant Java 9, le fichier RT.jar est un énorme jar contenant beaucoup de trop de classes. Java 9 va casser ce fat jar pour introduire le concept de modules.
+La problématique de la gestion de classpath est que c'est une linéarisation des jars à importer. De ce fait, un jar comme commons-collection.jar se retrouve au même niveau d'importance que le jar de gestion des connexions réseau, d'ou certaines failles de sécurité récentes.
+
+En java 9, RT.jar et tools.jar disparaissent au profit de modules.
+Les modules permettent d'introduire le principe de dépendances. Java 9 est bati avec des modules et certains modules ont directement été déclarés deprecated car ils vont bientôt disparaitre (corba, ...).
+En java 6, le jdk a grossi à cause d'intégration de module originaire de java EE, en java 9 ces modules vont passer deprecated pour redescendre dans javaEE 9. Exemple JaxB sera deprecated en Java 9 et supprimé en Java 10
+
+sun.*, com.sun.* sont deprecated depuis longtemps (1996) et sera supprimé en java 9, ou les packages seront masqués.
+Les modules commencant par jdk.* seront des modules internes.
+On pourra utiliser des modules Java9 en Java 10
+Avec Java 9 on va fournir un descripteur de module "module-info.java" qui va décrire ce que c'est qu'un module:
+
+* un nom de module,
+* un ensemble de dépendances vers d'autres modules avec le mot clé "requires"
+
+Le descripteur de module comme tout fichier java sera compilé.
+Le mot-clé "open" dans la déclaration d'un module permet d'autoriser l'utilisation d'un module deprecated.
+La ligne de commande java contient l'option --module-path en plus du --class-path
+Pour désigner le module à exécuter option "-m"
+== Passer une application java 8 en Java 9
+=== Déclarer le module
+Création d'un fichier module-info.java avec le nommage du module et les dépendances
+Définir dans le module ce qui est accessible à l'extérieur du module avec le mot clé "export" pointant sur les packages à publier
+=== découper notre application en module
+Créer les modules dans des répertoires différents.
+Rajouter les dépendances entre modules externes mais aussi internes.
+Par défaut, un module n'exporte rien, il faut donc explicitement indiquer ce qui est publié.
+Le mot clé export permet d'exporter un package, mais attention, *pas de wildcard accepté dans le nom de package !*
+
+On peut compiler plusieurs modules en 1 fois contrairement à maven. On peut donc avoir 1 seul projet qui contient plusieurs modules.
+Jigsaw sait détecter les problèmes de dépendances entre module avec des conflits de version mais ne permettra pas de les résoudre. Pour la machine virtuelle java, les modules n'ont pas de version. Par contre, on peut indiquer dans les jar les numéros de version (pratique pour débugguer et utile pour les outils degetsion de version jboss, osgi, ...).
+Il y a à présent un warning lors du javac si on utilise un module deprecated qui va disparaitre dans la prochaine version de java, ce warning est préfixée par "removal"
+
+== Encapsulation
+Changement au niveau visibilité puisqu'avant on n'avait que private, protected package et public. Maintenant public veut dire accessible à tout le monde mais à l'intérieur du module uniquement. On a ensuite le export qui permet d'exposer le public à l'extérieur du module.
+
+Un package ne peut pas être explosé sur plusieurs modules. 1 package ce n'est qu'un module.
+
+javac ne dit rien si un require est présent alors que ce module n'est pas utilisé dans le code.
+
+== Deep Reflection (changer les champs privés, les champs final)
+setAccessible ne fonctionne plus tout le temps.
+Si on veut que des classes à l'interieur d'un module soient accessibles à la deep reflexion, on peut utiliser "opens com.packageamoi" qui permet d'ouvrir ce package dans un module.
+
+== Transitive dependency
+Les transitive dependencies sont posibles en rajoutant dans la directive "requires" la directive "transitive" pour qu'on voit les dépendances d'un module dont on dépend.
+Attention, la transitivité ne s'applique qu'au niveau 1, on ne voit pas tout l'arbre de dépendance, juste le premier niveau.
+
+== Static dependency
+"requires static" définit une dépendance pour la compilation mais pas forcément au runtime. Si la dépendance est absente au runtime, le programme ne plantera pas ... à condition que ce soit géré dans le code.
+
+== Module automatique
+Prévu pour dépendre de jar non modulaires (dans lesquels il n'y a pas de module-info.java)
+Permet un mode de compatibilité avec des librairies non java 9
+On peut mixer des modules dans le module-path et des vieux jars dans le class-path
+En rajoutant un répertoire contenant des jar dans le module-path, on peut référencer avec des requires le nom d'un jar sauf que les tirets sont transformés par des points. Exemple, slf4j-api.1.4.5.jar est référencé par "requires slf4j.api"
+
+== Mode mixte
+Lorsqu'on référence un jar (plain old jar) qui a besoin d'une dépendance mais n'a pas de module-info du coup on doit à la fois référencer par le module-path le répertoire du plain old jar et référencer dans le class-path les jars nécessaires aux dépendances du plain old jar.
+Ca permet d'utiliser java 9 sans que toutes les dépendances soient passées à Java 9
+
+== Services
+java.util.ServiceLoader existe depuis Java6. Ca permet de faire de l'injection de dépendance à partir d'un fichier dans le META-INF/services d'un jar.
+Les dépendances entre interface d'un Service et implémentation d'un Service sont gérables en java 9 avec des mots clés :
+mots clés :
+
+  * uses nomDuService : permet de déclarer que le module va utiliser un service provenant d'un autre module
+  * provides nomdelApi with nomDuService : permet de déclarer que le module fournit une implémentation d'un Service
+La présence d'un module dans le module-path faisant un "provides" d'un service met automatiquement à disposition l'implémentation du service. Comme dans tout principe d'injection, si plusieurs implémentations sont disponibles, il faut pouvoir les sélectionner dans le code.
+
+== Convention
+Par convention, le module-info est organisé de la sorte :
+
+   1. requires
+   2. exports
+   3. uses
+
+== Exécuter en java 9 une application compilée en java 8
+Option sur la ligne de commande "--permit-illegal-access" permettant d'exécuter une application java 8 non modulaire en java 9. Ce flag ne sera présent que en Java 9 et pas en Java 10.
+Une application sans module-info, si elle accède à des modules dépréciés, il faut rajouter --add-module sur la ligne de commande (typiquement pour JaxB)
+Pour permettre que l'application java 8 fonctionne sans warning utiliser :
+--add-reads module=anotherModule
+--add-exports module/package=anotherModule
+--add-opens module/package=anotherModule
+
+== outil de diagnostic d'analyse statique
+jdeps --jdk-internals
+Gère et analyse les dépendances. Cet outil existe depuis java 8
+
+== Tests
+2 solutions :
+
+* Un module de test
+Créer un module pour les tests, ajouter une dépendance dans ce nouveau module vers le module à tester ainsi que vers un module automatique de Junit.
+* Un seul module
+Le principe est d'injecter les classes de test dans le module à tester lors du test. Pour cela on utilise les options de la ligne de commande :
+utiliser --add-reads, --add-modules, --add-exports et --patch-module
+patch-module permet d'étendre un module avec des classes supplémentaires
+
+== Précompilation
+jink permet de construire son propre jdk : livrer une application avec le jdk intégré
+jlink refuse les modules automatiques car il faut borner ce qui est nécessaire, ce qui est impossible avec les modules automatiques
+
+== Minimal VM
+VM minimale disponible avec jlink qui ne prend que 3 Mo au lieu des 20 Mo de a VM normale.
+expérmiental : "jaotc" permet de générer un .so ou .dll ou ou .dynlib pour une application java
+
+Sortie de Java 9 pévue le 27 juillet 2017

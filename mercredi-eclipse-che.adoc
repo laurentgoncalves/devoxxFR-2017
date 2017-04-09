@@ -1,0 +1,49 @@
+= Eclipse Che
+:toc:
+:toclevels: 3
+:toc-placement: preamble
+:lb: pass:[<br> +]
+:imagesdir: images
+:icons: font
+:source-highlighter: highlightjs
+
+Présenté par des gens de codenvy
+
+== Introduction
+Les développeurs ont souvent des difficultés à mettre en place un environnement de dev ou à remettre en place un env de dev sur un code qu'on reprend.
+
+L'environnement de dev c'est quoi, c'est l'IDE+Fichiers du projet+runtimes.
+Dans le workspace on a juste les fichiers du projet, par rapport à l'environnement de dev, il manque toute la configuration du workspace, les plugins, tous les runtimes pour exécuter le projet.
+
+Dans Che:
+
+   * Browser IDE,
+   * Fichiers du projet
+   * Ensemble des dépendances pour exécuter et tester le projet
+
+Il y a un container docker pour assurer cet environnement Che.
+Les desktop IDE (Eclipse IDE installé sur le PC du développeur) peuvent se connecter à Che via SSH.
+Che héberge et orchestre les workspaces.
+
+Che est lancé sur la machine avec une commande docker.
+Il est possible d'intégrer son propre conteneur docker qui servira au runtime du workspace ou d'utiliser un des conteneurs déjà préparés.
+
+== Language Server Protocol
+Ca a été initié par Microsoft.
+Ca permet de rendre de façon uniforme la complétion d'un langage.
+
+== Che et le cloud
+Il est possible de cloner des repository Che, permettant ainsi de dupliquer tout l'environnement (fichiers du projet, conf, commandes dans l'IDE, conf de débug, runtimes d'exécution,...).
+
+Il est possible de créer un environnement Che sur le Cloud directement en un lien.
+
+* Disponible sur OpenShift (redhat)
+* Disponible avec Codenvy
+
+Au final la conf de l'environnement de développement est commitable dans git et permet simplement de passer à l'ensemble des contributeurs tout l'environnement configuré.
+
+Intégration dans JIRA pour mettre un lien d'une fiche JIRA vers la création automatisé du workspace Che permettant de voir l'env de dev.
+
+== Conclusion
+Che s'adapte bien pour le use case de "Review" du code tout comme pour le use case de développement du code.
+Dans le cas où plusieurs versions du projet sont gérées, on peut facilement switcher d'environnement sans devoir tout ré-installer (dépendances jdk, webserver, ...) et facilement supprimer un environnement.

@@ -1,0 +1,34 @@
+= ReactNative : Comment faire une application iOS & Android quand on est développeur web
+:toc:
+:toclevels: 3
+:toc-placement: preamble
+:lb: pass:[<br> +]
+:imagesdir: images
+:icons: font
+:source-highlighter: highlightjs
+
+== Qu'est-ce que ReactNative
+Basé sur ReactJS. ReactNative est développé par Facebook.
+ReactNative permet de faire des applications pour mobile à partir de composants similaires à ReactJS.
+ReactNative n'est pas basé sur des WebView, mais des composants natifs pour mobile.
+C'est pourquoi ReactNative est différent de titanium, phonegap, ionic, ...
+
+ReactNative propose une CLI installable avec npm
+
+HotLoading du fichier JS directement dans le Simulateur iOS
+
+La mise en forme se fait avec un pseudo-css, ça ressemble beaucoup au css mais ce n'est pas du css.
+
+Points forts : 
+
+   * mutualisation de code entre iOS et Android
+   * Même code entre React et React native
+   * possibilité de mixer du natif et du react native
+
+Pour démarrer facilement 
+----
+create react native app
+----
+
+ReactNative offre la possibilité d'utiliser des librairies natives dans l'application native.
+https://github.com/flegall/NewBornNamer

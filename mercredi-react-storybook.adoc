@@ -1,0 +1,44 @@
+= React StoryBook
+:toc:
+:toclevels: 3
+:toc-placement: preamble
+:lb: pass:[<br> +]
+:imagesdir: images
+:icons: font
+:source-highlighter: highlightjs
+
+== Qu'est-ce que StoryBook
+Dans ReactJS, un composant graphique a un état composé de plusieurs propriétés.
+Exemple la barre d'avancement (savoir où on est qu'est-ce qu'il y a avant, ...)
+
+React Storybook permet de créer un environnement isolé pour développer un composant.
+
+Pour créer un StoryBook, il faut taper "getStorybook" sur la ligne de commande.
+
+ReactStoryBook a quelques concepts :
+
+* Stories kind : le composant
+* Stories : tous les états du composant
+
+Story book permet de :
+* générer de la documentation
+* lister les différents cas d'utilisation d'un composant en présentant graphiquement et en documentant le composant graphique
+* penser API first : penser les scénarios d'utilisation du composant et les documenter,
+
+Les story sont basées sur du code donc elles évoluent en même temps que l'application.
+
+Les stories permettent d'avoir un outil de test d'un composant graphique en voyant l'effet des modifications de ses propriétés sur le graphique.
+
+== Storyshots
+C'est un outil avec storybook permettant de prendre un snapshot html et faire un diff plus tard pour comparer.
+Cet outil permet de répondre à la problématique de test des stories.
+
+== Specs addon
+Plutot que faire des snapshots du html du composant, on écrit des tests unitaires du storybook en spécifiant les expectations sur le html obtenu.
+
+== Maintenance
+Les storybook permettent d'avoir des points d'entrée très isolés et rapides d'accès pour reproduire un bug.
+
+== Killer feature : communication
+Story book permet de mieux communiquer (équipe, client, autres devs ...) sur les composants graphiques et ce qu'ils permettent de faire.
+Permet également de pointer très précisément un bug sur un composant graphique en créant ou pointant sur une story

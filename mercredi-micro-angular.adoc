@@ -54,6 +54,7 @@ URLSearchParams permet de décortiquer les paramètres de l'URL.
 
 == API
 Comment exposer une API ? Voila ce qui existe :
+
 * JSon:API
 * OData
 * Jsend
@@ -68,6 +69,7 @@ Swagger a été donné à l'Open API Initiative.
 API pour créer le contrat avec du code Java.
 
 Annotations Swagger pour annoter le code Java afin de générer la spec swagger :
+
 * @Api
 * @ApiOperation
 * @ApiResponses
@@ -79,6 +81,7 @@ Swagger a un éditeur de contrat pour faire du "contract first" et ainsi génér
 == CORS (Cross-Origin Resource Sharing)
 Il faut passer par les Headers HTTP pour indiquer au navigateur ce qui est autorisé.
 JaxRS 2.1.0 le fait via un filtre ContainerResponseFilter (qu'il faut mettre en place) pour rajouter les headers:
+
  * Access-Control-Allow-Origin *
  * Access-Control-....
 

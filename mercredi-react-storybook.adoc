@@ -21,6 +21,7 @@ ReactStoryBook a quelques concepts :
 * Stories : tous les états du composant
 
 Story book permet de :
+
 * générer de la documentation
 * lister les différents cas d'utilisation d'un composant en présentant graphiquement et en documentant le composant graphique
 * penser API first : penser les scénarios d'utilisation du composant et les documenter,

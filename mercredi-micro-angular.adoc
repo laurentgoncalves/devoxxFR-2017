@@ -1,0 +1,127 @@
+= Entreprise Java MicroProfile Typescript and Angular
+:toc:
+:toclevels: 3
+:toc-placement: preamble
+:lb: pass:[<br> +]
+:imagesdir: images
+:icons: font
+:source-highlighter: highlightjs
+
+Présenté par Sebastien Pertus @sebastienpertus de Microsoft Toulouse et Antonio Goncalves @agoncal
+
+== Introduction
+JavaEE ne fournit pas grand chose pour les MicroServices, de ce constat est né le besoin de MicroProfile.
+
+== MicroProfile
+MicroProfile : nouveau profil après le full profile et le WebProfile
+
+MicroProfile v1.0 : JAX-RS, CDI, JSON-P
+
+Microprofile est une spécification qui est hors JCP pour l'instant, dans la fondation eclipse pour l'instant.
+
+La v1.1 prévue mi 2017 et une v2.0 prévue fin 2017.
+L'objectif est de créer une norme puis une spécification dans le JCP
+
+Des implémentations existent aujourd'hui : Wildfly swarm, payara, tomEE. Le crédo de wildfly swarm : "Rightsize your serices"
+
+L'objectif de Microprofile est de constituer son serveur JEE avec uniquement les briques de JEE qui nous intéresse pour l'application à déployer.
+Microprofile permet de packager son application avec les briques du serveur qui sont intéressantes : Mettre un war à l'intérieur d'un jar.
+
+== TypeScript
+Un navigateur nommé "Brave" a été fait par la personne qui a inventé Javascript, à tester...
+
+Typescript permet de transpiler dans n'importe quelle version d'ecmascript (3+)
+
+== Angular 2+
+Utilise Typescript au lieu de Javascript.
+Angular est composé (entre autres) des concepts suivants :
+
+* Concept de Service pour dialoguer avec le serveur
+* Concept de Component graphique
+* Concept de module pour grouper les composants
+Angular propose pour développer plus vite Angular CLI (Command Line Interface)
+
+L'outil Webpack utilisé pour agréger les fichiers js en un seul
+
+Création d'un composant :
+ng g component room
+
+Création d'un service :
+ng g service room
+
+Utiliser des OpaqueToken (qui devient InjectionToken dans Angular 4) pour avoir de l'unicité et éviter des conflits de nom de variable dans les paramètres de service.
+URLSearchParams permet de décortiquer les paramètres de l'URL.
+
+== API
+Comment exposer une API ? Voila ce qui existe :
+* JSon:API
+* OData
+* Jsend
+* HAL
+* CPHL
+* SIREN
+* Google's JSon Style Guide
+
+L'outil Swagger pour définir le contrat de l'API, il permet de documenter l'API REST.
+Swagger a été donné à l'Open API Initiative.
+
+API pour créer le contrat avec du code Java.
+
+Annotations Swagger pour annoter le code Java afin de générer la spec swagger :
+* @Api
+* @ApiOperation
+* @ApiResponses
+
+Il existe un plugin Maven pour générer le contrat swagger.
+Génération du code Angular à partir de la spec swagger possible.
+Swagger a un éditeur de contrat pour faire du "contract first" et ainsi générer par la suite le code Java du serveur et le code angular.
+
+== CORS (Cross-Origin Resource Sharing)
+Il faut passer par les Headers HTTP pour indiquer au navigateur ce qui est autorisé.
+JaxRS 2.1.0 le fait via un filtre ContainerResponseFilter (qu'il faut mettre en place) pour rajouter les headers:
+ * Access-Control-Allow-Origin *
+ * Access-Control-....
+
+Voir spec W3 de CORS
+
+== HATEOAS (Hypermedia as the Engine of Application State)
+Objectif : fournir un contrat au Runtime, exemple : la dernière page c'est la page 14 donc l'url est ...
+
+Principe : rajouter des données dans le json qui fournissent des liens vers des urls logiques.
+
+Normalisation des liens : http://www.iana.org/assigments/link-relations/link-relations.xml
+
+HateOAS va bientôt rentrer dans la norme Swagger
+
+== Caching
+HTTP a un cache temporaire.
+Le header "ETag" aka "Entity tags" permet au serveur de renvoyer un checksum de la ressource.
+Ainsi lorsque le client redemande la même ressource, il passe le checksum précédemment reçu pour cette ressource et le serveur répond alors "pas de changement"
+----
+EntityTag etag = new EntityTag(entité.hashCode());
+Response.ResponseBuilder preconditions = request.evaluatePreconditions(etag);
+----
+Ce principe est à développer côté Back mais les browser gèrent automatiquement ce principe, il n'y a rien à coder côté FrontEnd.
+
+== JWT
+Json Web Token : token léger en base64 et passé à chaque requête.
+Il faut utiliser OAuth 2 pour ne pas avoir le mot de passe passé en clair.
+Dans Angular, utiliser CanActivate pour placer une "garde" avant l'affichage d'une page qui est sécurisée
+
+== Angular et les environnements
+Angular CLI crée des environnements permettant de switcher les variables entre production/intégration/dev/...
+Une variable "environnement" est alors présente dans le code et on a accès à ses propriétés.
+Lorsqu'on lance le serveur avec "ng serve -prod" l'environnement cible est la prod, donc le fichier environnement.prod.ts sera chargé pour l'environnement.
+
+ng build : construit l'application pour être déployée dans un Apache par exemple
+
+ng build -prod : pour la prod
+
+== Microsoft Azure
+Image docker : on peut dialoguer avec le port 2375 en branchant le daemon local de docker-compose sur ce port pour qu'il dialogue avec le docker distant
+
+== Ressources
+Traefik : reverse proxy
+Source du code du talk :
+github.com/agoncal
+github.com/Mimetis/UniversityDevoxx

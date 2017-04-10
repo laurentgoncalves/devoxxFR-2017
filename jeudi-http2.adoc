@@ -1,0 +1,41 @@
+= HTTP2
+:toc:
+:toclevels: 3
+:toc-placement: preamble
+:lb: pass:[<br> +]
+:imagesdir: images
+:icons: font
+:source-highlighter: highlightjs
+
+Présenté par Sébastien Augereau + https://cfp.devoxx.fr/2017/talk/YKQ-5747/HTTP2_du_point_de_vue_developpeur [Descriptif de la conférence sur le site du CFP de Devoxx] +
+
+== Introduction
+En http 1, une ressource demandée au serveur se fait dans 1 connexion http.
+Alors qu'en http2, une seule requête est établie et tout va passer par cette requête bidirectionnelle.
+On a alors un gain en temps d'établissement de connexion car chaque navigateur a un nombre maximal de requête en parallèle.
+
+== Compression des headers
+
+* Format HPACK pour compresser les échanges
+* Suppression de la redondance des headers puisqu'ils sont dans la même requête
+* 80% des navigateurs acceptent HTTP2 (sauf opera mini)
+
+== Pourquoi migrer
+* Temps de chargement réduit (25 à 50%) vu que toutes les requêtes peuvent être lancées en même temps, on n'es tplus limité par le nombre max de requête du navigateur,
+* Plus sécurisé car ne fonctionne que en https
+* Avantage pour le référencement SEO : Google se base sur la latence de la page et la sécurisation de la connexion donc en http2 meilleur référencement
+
+== Comment mettre en place
+* JSR 369 : standardise le HTTP2
+* Déjà disponible dans certains serveurs Web :
+** Undertow 1.3
+** Jetty 9.3
+** Tomcat 8.5
+
+Le JDK 8 est obligatoire. Il y a souvent de la configuration à effectuer pour l'activer sur le serveur. Exemple : ENABLE_HTTP2 pour undertow
+
+== Pratiques plus nécessaires
+Du fait de HTTP2, certaines pratiques mises en place en HTTP 1.x pour optimiser les pages ne sont plus nécessaires comme :
+
+* Sprite,
+* fichier inlinés, ...

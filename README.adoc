@@ -20,7 +20,7 @@
 |11:15 / 12:00		|Neuilly 252 AB		|Conference			|link:jeudi-inmemory.adoc[Architecture par la pratique: patterns d'utilisation de systèmes in-memory - WD-40 entre vos données et vos applis]
 |12:05 / 12:20		|Neuilly 252 AB		|Quickie			|link:jeudi-http2.adoc[HTTP 2 du point de vue du développeur]
 |12:25 / 12:40		|Neuilly 252 AB		|Quickie			|link:jeudi-choix-bd.adoc[Stockage des données: Quel système pour quel usage]
-|12:55 / 13:40		|Neuilly 252 AB     |Conference			|Des builds incroyablement rapides avec Gradle 4
+|12:55 / 13:40		|Neuilly 252 AB     |Conference			|link:jeudi-gradle4.adoc[Des builds incroyablement rapides avec Gradle 4]
 |13:55 / 14:40		|Amphi Maillot		|Conference			|Optimiser les performances d'une webapp
 |14:55 / 15:40		|Amphi Maillot		|Conference			|Java 9 à la poursuite des grands heaps
 |16:10 / 16:55		|Neuilly 252 AB		|Conference			|Mixité dans le monde des webcomponents

@@ -1,0 +1,73 @@
+= Gradle 4
+:toc:
+:toclevels: 3
+:toc-placement: preamble
+:lb: pass:[<br> +]
+:imagesdir: images
+:icons: font
+:source-highlighter: highlightjs
+
+Par Cédric Champeau @CedricCham + https://cfp.devoxx.fr/2017/talk/NPZ-6166/Des_builds_incroyablement_rapides_avec_Gradle_4[Descriptif de la conférence sur le site du CFP de Devoxx] +
+
+== Gradle daemon
+* Gradle daemon vit en tâche de fond et qui exécute les build au fur et à mesure.
+* Le build devient de plus en plus rapide grâce au daemon avec le JIT
+
+== Continuous builds
+option -t pour faire un watch permettant de relancer un build lorsque le source change.
+
+= Build scans (Gradle enterprise)
+Le build devrait avoir la même qualité que celle exigée sur le code source d'une application.
+Debug, monitor, optimize sont des outils proposés par Gradle.
+
+Gradle enterprise est disponible gratuitement.
+
+Build scans génère un rapport html :
+
+   * Détaille le temps de chaque tâche, avec des détails
+   * Donne l'arbre des dépendances
+   * Plugins exécutés,
+   * Optimisations proposées (activer le parallèlisme, ...)
+
+== Incremental build
+Gradle est prévu pour ça.
+Partant du concept que faire un clean est une perte de temps, gradle s'est orienté comme eclipse en son temps sur les builds incrémentaux.
+Si vous faites un plugin de gradle il faut identifier dans les paramètres de cette tâche quels sont ceux qui désignent les entrées et ceux qui désignent les sorties.
+Gradle saura alors relancer incrémentalement votre plugin : si les entrées n'ont pas changé, alors pas d'appel.
+Idem pour les sorties.
+
+== Incremental compilation
+* Gradle sait compiler incrémentalement java.
+* Vraiment beaucoup plus performant !
+
+pour plus d'infos, voir le blog post (cf slides)
+
+== Compile avoidance
+Comment éviter de compiler ?
+Il faut différencier le classpath de compilation VS classpath d'exécution.
+
+* Gradle 3.4 est capable d'extraire l'interface binaire d'une classe(signature des méthodes, ...) et ainsi il ne va pas recompiler les dépendances si l'interface n'a pas changé.
+Ca améliore énormément les perfs de génération car la regénération des dépendances est optimisée.
+* Gradle est capable de séparer les dépendances pour l'API et les dépendances pour la compilation
+* mots clés "api" et "implementation" dans le dependencies du build.gradle
+
+== Composite build
+Le principe est de séparer les gros build en plusieurs.
+----
+--include-build 
+----
+permet de remplacer une dépendance de binaire (jar d'un composant utilisé) par une dépendance source (module en cours d'édition)
+
+== Gradle 3.5
+Gradle 3.5 introduit le Build cache. Son principe peut être résumé de la sorte : si mon voisin développeur a compilé, j'aimerais bien récupèrer sa compilation plutôt que recompiler le même code de mon côté.
+
+* Le build cache apporte une grosse optim de performance.
+* Permet de réduire le temps de compil et donc le temps de feedback s'il y a un soucis
+* Permet aussi d'avoir un CI qui devient la référence pour le cache : tous les développeurs de la boîte récupèrent la version recompilée du CI.
+
+Le build cache est différent du package de maven ou gradle dans le sens que le build cache conserve tous les artefacts du build (.class, ressources, ...) afin de faire un "uptodate" performant.
+
+== What's next
+
+* Parallel by default
+* Performance Guide en ligne

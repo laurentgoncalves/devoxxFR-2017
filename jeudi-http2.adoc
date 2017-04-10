@@ -7,7 +7,7 @@
 :icons: font
 :source-highlighter: highlightjs
 
-Présenté par Sébastien Augereau + https://cfp.devoxx.fr/2017/talk/YKQ-5747/HTTP2_du_point_de_vue_developpeur [Descriptif de la conférence sur le site du CFP de Devoxx] +
+Présenté par Sébastien Augereau + https://cfp.devoxx.fr/2017/talk/YKQ-5747/HTTP2_du_point_de_vue_developpeur[Descriptif de la conférence sur le site du CFP de Devoxx] +
 
 == Introduction
 En http 1, une ressource demandée au serveur se fait dans 1 connexion http.

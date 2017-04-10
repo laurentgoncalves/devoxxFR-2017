@@ -1,0 +1,38 @@
+= Quel système de BD pour votre application
+:toc:
+:toclevels: 3
+:toc-placement: preamble
+:lb: pass:[<br> +]
+:imagesdir: images
+:icons: font
+:source-highlighter: highlightjs
+
+Par Zouheir Cadi @zouheircadi + https://cfp.devoxx.fr/2017/talk/RSS-4693/Stockage_des_donnees_:_quel_systeme_pour_quel_usage_%3F[Descriptif de la conférence sur le site du CFP de Devoxx] +
+
+== RDBMS
+Les requêtes dans les SGBD relationnels ont une sémantique très riche.
+Le moteur de BD choisit l'algorithme de parcours en fonction de la requête pour avoir des performances optimales.
+Dans les RDBMS on retrouve le concept de transaction avec l'acidité.
+Le problème des RDBMS c'est qu'ils ne scalent pas.
+
+== NoSQL
+
+* Permet le partitionnement
+* Permet la réplication
+
+
+Si les traitements ont besoin de scaler il faut partitionner le traitement.
+
+== OLAP : traitements analytiques
+Map reduce : abstraction de haut niveau qui permet de produire des volumes de données importants dans un cluster.
+
+Spark : apporte à MapReduce la possibilité de travailler en mémoire et apporte d'autres transformations que le MapReduce
+
+== OLTP : traitements transactionnels
+
+* Orienté Clé valeur : put get delete
+* Orienté Document : JSON, BSON : CRUD
+* Orienté Colonne : BigTable, Hbase, Hypertable, Cassandra : C-Store, Vertica
+* Column family stores : Map de Map ou Map de Map de Map
+
+Conclusion : Le business (comprendre ce que vous avez à faire avec vos données) dicte la techno choisie

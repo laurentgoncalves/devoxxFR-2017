@@ -11,45 +11,48 @@ Présenté par Emmanuel Bernard et Galder Zamarreno
 + https://cfp.devoxx.fr/2017/talk/UKK-0693/Architecture_par_la_pratique:_patterns_d%E2%80%99utilisation_de_systemes_in-memory_-_WD-40_entre_vos_donnees_et_vos_applis[Descriptif de la conférence sur le site du CFP de Devoxx] +
 
 == In memory systems
-Systèmes clé valeur distribués, élastiques (ajout de noeud, rééquilibrage), persisté sur disque mais chargés en mémoire pour travailler en mémoire.
-Système en mémoire : WD40 : met de l'huile dans vos données
+Systèmes clés valeurs distribués, élastiques (ajout de noeud, rééquilibrage), persistés sur disque mais chargés en mémoire pour travailler en mémoire.
+Les systèmes en mémoire, c'est comme l'huile WD40 : ça met de l'huile dans vos données.
 
 == Use case : Caching
-Si on perd de la donnée, c'est pas grave.
-Donc persistence pas important, redondance pas important, par contre gestion mémoire importante.
+Dans ce use case, si on perd de la donnée, c'est pas grave car c'est juste un cache donc pas la source primaire de la donnée.
+Donc la persistence n'est pas importante, la redondance pas importante, par contre la gestion mémoire est importante.
 2 approches :
 
    * soit embarquer le cache dans le noeud applicatif
    * soit dédier un système séparé pour le cache
 
 == Use case : Primary store
-Le système en mémoire est le système primaire : mon application reçoit l'information et je la stocke en mémoire
-redondance, persistence sur disque
-Performance, système gourmand en mémoire mais centralisé et sécurisé.
+Dans ce use case, le système en mémoire est le système primaire : mon application reçoit l'information et je la stocke en mémoire.
+Donc on a besoin de redondance et de persistence sur disque.
+Pourquoi en mémoire dans ce use case, c'est pour des raisons de performance, on a alors un système gourmand en mémoire mais centralisé et sécurisé.
 
-Inifinispan permet de mettre en place des streams avec traitement sur les données passant dans le cache
+Inifinispan permet de mettre en place des streams avec traitement sur les données passant dans le cache.
 
 == Mixin stores
-OGM et ORM pour accéder de manière indifférente aux données
+Hibernate OGM et ORM pour accéder de manière indifférente aux données que ce soit RDBMS ou NoSQL.
 
 Spark peut être utilisé pour accéder à ces SGBD mémoire (Infinispan, hazelcast, ...)
 
-Possibilité d'avoir 2 grilles actives en même temps, persistées chacune de leur côté dans des datacenters différentes par exemple.
+Possibilité d'avoir 2 grilles actives en même temps, persistées chacune de leur côté dans des datacenters différents par exemple.
 
-Peut être utilisé pour externaliser les session http
+Peut être utilisé pour externaliser les session HTTP.
 
-== Requêtes en continue
-Installation d'un requête sur le serveur : dès qu'il y a un changement qui répond au résultat de la requête, avertit moi
-Les requêtes sont indexées pour savoir qu'elle requête déclencher lorsqu'une modification de la BD arrive.
+== Requêtes en continu
+Le principe des requêtes en continu se base sur l'installation d'une requête sur le serveur : dès qu'il y a un changement qui répond au résultat de la requête, avertit moi.
+Les requêtes sont indexées pour savoir, lorsqu'une modification sur la BD a lieu, quelle requête doit être déclenchée.
 
 == Debezium
-Projet démarré pour capturer les changements d'une base de données et fournir à des micro service ou autre cette queue de changement (elasticsearch, actualisation cache niv 2, ...).
-Postgres (quasi bientôt), mysql, mongo
+Debezium est un projet démarré pour capturer les changements d'une base de données et fournir à des micro service ou autre cette queue de changement (elasticsearch, actualisation cache niv 2, ...).
+
+En terme d'implémentation, celle pour Postgres est quasi prête (sortie bientôt), mysql est utilisable ainsi que mongoDB.
 
 Quelques références :
 
 http://www.infinispan.org
-http://www.debezium.io
-http://www.teiid.org
-http://github.com/galderz/datagrid-patterns
 
+http://www.debezium.io
+
+http://www.teiid.org
+
+http://github.com/galderz/datagrid-patterns

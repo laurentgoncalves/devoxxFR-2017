@@ -1,0 +1,84 @@
+= Optimiser les performances d'une webapp
+:toc:
+:toclevels: 3
+:toc-placement: preamble
+:lb: pass:[<br> +]
+:imagesdir: images
+:icons: font
+:source-highlighter: highlightjs
+
+Par Guillaume Ehret @guillaumeehret + https://cfp.devoxx.fr/2017/talk/DOZ-6256/Optimiser_les_performances_d'une_webapp[Descriptif de la conférence sur le site du CFP de Devoxx] +
+https://speakerdeck.com/javamind/optimiser-les-performances-dune-webapp[Slides de la session]
+
+== Introduction
+
+* Une étude a montré qu'avec une attente de 3 secondes sur une page web, 60% de personnes sont perdues(ont fermé le navigateur ou changé de page).
+* Aujourd'hui il y a plus d'utilisateurs mobile que desktop (graphe globalstatcounter)
+
+Pourquoi une page web est lente : une page télécharge en moyenne 2Mo, sur du wifi ça va mais en 3G ça va plus trop alors si en plus la qualité du réseau 3G est pas terrible...
+
+== La démarche
+Le présentateur nous propose une démarche pour optimiser les performances d'une application Web:
+
+1 mesurer
+2 transport
+3 limiter
+4 cache
+5 offline
+6 anticiper
+
+=== Mesure
+Dans une page Web, les ressources présentes dans le head sont bloquantes pour l'affichage de la page.
+On mesure le load time (temps pour télécharger et afficher la page du serveur) et le first paint (temps nécessaire avant que la page commence à s'afficher)
+
+* Objectif : load time < 1 seconde
+* outils : webpagetest, pagespeed insight, chrome developer tools
+* Chrome dev tools : Mode mobile, cache, Throttling 3G
+
+=== Transport
+* Déplacer les scripts à la fin du body plutôt que le head : permet de gagner en temps d'affichage (le first paint plus tôt)
+* Passer en HTTP2 permet très simplement de déclencher en même temps toutes les requêtes
+  Pour utiliser HTTP2 dans java : Ajouter le jar ALPN au jdk (lib pour jdk <9)
+
+=== Limiter la taille des données
+* Minification sur html, css, javascript
+* JSON renvoyé par les services REST peuvent être réduits en multipliant les DTO pour ne renvoyer que les informations utiles
+* Activer la compression gzip sur les ressources textuelles
+* Attention aux frameworks web ou css qui sont lourds. Astuce : utilisez la modularité des frameworks. Utiliser UnCSS pour générer un CSS épuré
+* Compression des images : imagemin intégré à gulp pour compresser les images
+* Préférer le vectoriel (svg) pour la déperdition de qualité
+* Dans html5 il y a la balise picture permettant de fournir un srcset permettant de fournir une image différente en fonction des contraintes du navigateur. WebP : format propriétaire microsoft
+* WebFont : Attention c'est gros ! Utiliser des woff2 : dans la balise de la fonte, l'ordre est important, utiliser sur plus compressé au moins compressé
+* Utiliser un CDN pour les fontes a permis de diviser la taille par 2
+* Javascript : Utilisez les CDN(google api par ex) permet d'obetnir le javascript optimisé pour le navigateur
+
+=== Cache
+* Une ressource en cache est une ressource qui n'a pas besoin d'être envoyée, c'est la meilleure optim possible
+* Le serveur envoit des informations sur la réponse HTTP informant le navigateur sur le comportement à avoir pour son cache
+* Header cache-control
+** max-age : intéressant mais si la ressource change, le navigateur ne la voit pas tant que le max-age n'est pas dépassé.
+** ETag : intéressant car permet de ne renvoyer la ressource que si elle a changé (checksum).
+
+=== Mode Offline
+* Service Worker : pas disponible sur tous les navigateurs.
+** Basé sur les Web Worker : permet de lancer des traitements dans d'autres thread mais ne permet pas de jouer sur le DOM
+** Le thread principal va dialoguer par échange de message
+
+sw-precache : module node permettant de mettre en place facilement les Web Workers.
+
+sw-toolbox : librairie JS qui fournit des utilitaires pour gérer le cache. On peut choisir la stratégie : networkfirst, cachefirst, fastest, CacheOnly, NetworkOnly
+
+Chrome Dev Tools permet de voir les service workers activés
+
+=== Anticiper
+* Charger le plus important tout de suite et le reste plus tard *
+Dans un <link> html on peut rajouter rel="preload" (et rajouter "as" pour indiquer ce que c'est) permet d'indiquer au navigateur de charger cette ressource en premier.
+Attention, ce n'est pas supporté par tous les navigateurs (voir caniuse).
+
+rel="prefetch" permet de dire au navigateur "si tu as du temps, charge ça" --> anticiper les prochaines chargements exemple : police d'écriture
+Permet de gagner sur le first paint.
+Attention, prefetch n'est pas supporté par Safari et Opera Mini, mais bien supporté par les autres navigateurs (voir caniuse).
+
+https://github.com/Dev-Mind/devoxx2017
+
+Suivre Addy Osmani sur twitter qui travaille chez Google et poste beaucoup sur l'amélioration des perfs

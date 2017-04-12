@@ -1,0 +1,61 @@
+= Organisez la logique de votre application avec Redux
+:toc:
+:toclevels: 3
+:toc-placement: preamble
+:lb: pass:[<br> +]
+:imagesdir: images
+:icons: font
+:source-highlighter: highlightjs
+
+Par Matthieu Lux @Swiip + https://cfp.devoxx.fr/2017/talk/GLA-5382/Organisez_la_logique_de_votre_application_Web_avec_Redux[Descriptif de la conférence sur le site du CFP de Devoxx] +
+
+== Introduction
+Les dépendances des modules dans une application c'est compliqué à gérer surtout lorsque ça doit évoluer.
+
+Sur Angular, la solution préconisée, c'est d'utiliser des Services et les composants vont surveiller les services.
+
+Sous React, pattern flux, c'est un sac de noeud.
+
+== Redux
+L'objectif est que tout soit localisé dans le state de Redux et pas dans l'application.
+
+La notion d'action est ce qui va interférer sur le State.
+
+Notion de Reducer : c'est là qu'est la logique : qu'est-ce qu'on fait d'une nouvelle action pour créer un nouveau state ?
+
+Redux : avec un previous state et une action on a un nouveau state
+
+Règles:
+
+* Single source of truth : juste le state, ce qui est dans le state ne doit pas être ailleurs
+* State is read-only : pour faire une modif, il faut passer par une action
+* Changes are made with pure functions : Le reducer ne doit pas prendre en compte d'effet de bord, que du synchrone
+
+Redux c'est super proche de Event Sourcing et de CQRS
+
+== Industrialisation
+* CombineReducer : Composition de reducer ensemble pour que chaque reducer soit responsable d'une zone du state
+* ApplyMiddleware : Pour toute action qui passe on va faire le même truc (exemple le log)
+* Connect : Possibilité d'injecter dans le composant sous forme d'entrée, les informations qui viennent de Redux dont il a besoin
+* Assynchrone avec Thunk et Promise : Une des approches est d'avoir des méta actions (thunk) qui lancent plusieurs actions (avec des future)
+* Isomorphisme (Server Side Rendering) : Facilité pour faire passer le state côté serveur au côté client puisque tout est dans le state
+
+== Pas forcément besoin de Redux :
+* Overhead : c'est un peu plus compliqué puisqu'il c'est un framework à rajouter à votre application
+* Boilerplate : beaucoup de code pour parfois faire pas grand chose, mais sur les grosse appli on retrouve le gain
+* Contraintes : sérialiser l'état dans un javascript simple (json) sans boucle interne, les actions doivent être des objets simples
+
+== Outillage
+* Logger : de beaux logs sur la console
+* DevTools(plugin du Chrome dev tools) : montre les state, les actions, ...
+* Time Travel : On peut revenir dans des états précédents,
+* Undo : comme les actions sont sérialisées, on peut facilement faire les undo
+* Hot reload de la logique de l'appli
+
+* NGRX : Dans Angular un autre Redux
+* VueX : Dans Vue.JS une implémentation de reduc
+
+Démo avec TodoMVC
+
+https://github.com/swiip/
+

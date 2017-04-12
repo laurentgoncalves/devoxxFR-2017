@@ -1,0 +1,36 @@
+= Mixité des Web components
+:toc:
+:toclevels: 3
+:toc-placement: preamble
+:lb: pass:[<br> +]
+:imagesdir: images
+:icons: font
+:source-highlighter: highlightjs
+
+Par Cyril Balit et Horacio Gonzalez @lostinbrittany + https://cfp.devoxx.fr/2017/talk/NQJ-5142/Mixite_dans_le_monde_des_webcomponents[Descriptif de la conférence sur le site du CFP de Devoxx] +
+
+
+== Rappel Web Component :
+* Custom Element : définir sa propre balise html
+* Shadow DOM : Masque ce qui est fait aux utilisateurs
+* Import du HTML
+* Template : zone de html qui peut être utilisé par le composant
+
+Polyfill assez robuste : polymer anonce qu'on peut l'utiliser en production.
+
+Un web component est un composant standard javascript.
+
+Le databinding angular marche sur les propriétés du composant web component.
+
+Problème : Angular écoute les évènements angular mais pas les évènement natif (ngClick, ...) du coup, il a fallu rajouter une directive angular pour le forcer à écouter les évènements natifs.
+
+Intégrer un composant Google maps a nécessité de faire un webcomponent wrapper.
+
+Conclusion : Intégrer un web component est un peu contraignant mais beaucoup moins que changer de framework.
+
+CUSTOM_ELEMENTS-SCHEMA à rajouter dans Angular pour lui dire qu'il peut y avoir des web components
+
+Librairie react-polymer pour lier les web components créés avec polymer avec react.
+
+Avec VueJS rien à faire pour que ça fonctionne avec les WebComponent.
+

@@ -1,0 +1,31 @@
+= Mode offline sur une application mobile
+:toc:
+:toclevels: 3
+:toc-placement: preamble
+:lb: pass:[<br> +]
+:imagesdir: images
+:icons: font
+:source-highlighter: highlightjs
+
+Présenté par Mathieu Hausherr et Romain Potier + https://cfp.devoxx.fr/2017/talk/OKC-5960/Mode_offline_:_Notre_application_mobile_fonctionne_au_niveau_-5_d%E2%80%99un_parking[Descriptif de la conférence sur le site du CFP de Devoxx] +
+
+== Introduction
+Présentation de leur application de location de voiture par mobile.
+
+1ere idée : faire du cache avec le header "cache-control" max-age
+
+il existe aussi cache-control max-stale=..... veut dire que même si la donnee est perimee, on accepte de l'afficher.
+
+OkHttp Interceptor pour Android pour mettre en cache.
+
+Sur iOS, pour implémenter un cache en Swift, il suffit de stocker le cache via un fichier.
+
+Chuck interceptor permet de débugguer sur Android les appels http.
+
+God Eye sur iOS permet de débugguer, mais attention au CI car il ne faut pas lasser ce mode en prod.
+
+Sur Android, le JobScheduler sur Android 5+ permet d'envoyer plus tard lorsqu'il y a du réseau les données de l'application.
+
+Sur iOS, il n'y a pas ce principe de JobScheduler mais il y a des Notifications silencieuses qui laisse 30 secondes au bout de code pour faire ce qu'on veut.
+
+Fetch des images à l'avance: Sur android, librairie Picasso utilisée

@@ -24,7 +24,7 @@
 |13:55 / 14:40		|Amphi Maillot		|Conference			|link:jeudi-webperf.adoc[Optimiser les performances d'une webapp]
 |14:55 / 15:40		|Amphi Maillot		|Conference			|link:jeudi-java9-heap.adoc[Java 9 à la poursuite des grands heaps]
 |16:10 / 16:55		|Neuilly 252 AB		|Conference			|link:jeudi-webcomponents.adoc[Mixité dans le monde des webcomponents]
-|17:10 / 17:55		|Paris 241		    |Conference			|Mode offline : Notre application mobile fonctionne au niveau-5 d'un parking
+|17:10 / 17:55		|Paris 241		    |Conference			|link:jeudi-mobile-offline.adoc[Mode offline : Notre application mobile fonctionne au niveau-5 d'un parking]
 |18:10 / 18:40		|Amphi bleu		    |Tools-in-Action	|Le web multi-écran
 |18:55 / 19:25		|Paris 241			|Tools-in-Action	|Démocratiser le machine learning avec Tensorflow
 |===

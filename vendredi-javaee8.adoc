@@ -1,0 +1,81 @@
+= Java EE 8
+:toc:
+:toclevels: 3
+:toc-placement: preamble
+:lb: pass:[<br> +]
+:imagesdir: images
+:icons: font
+:source-highlighter: highlightjs
+
+Présenté par David Delabassee + https://cfp.devoxx.fr/2017/talk/KAS-7912/Java_EE_8%3F_Ah_ben_non_peut-etre![Descriptif de la conférence sur le site du CFP de Devoxx] +
+
+== Introduction
+* Java EE n'est pas mort.
+* "reboot" sur le travail sur JavaEE l'année dernière
+
+== Jax-RS 2.1
+* Reactive client API
+* Server-sent events
+* Hypermedia API enhancements
+* Integration with other JSRs and frameworks
+* Par contre les non-blocking API sont repoussées à plus tard
+
+Introduction d'un nouvel invoker Rx
+
+=== Server-sent events
+* Persistent, one-way communication channel,
+* text protocol
+* c'est le push du serveur
+* Supporté par tous les navigateurs sauf IE et opera mini
+* Nouvelles classes SseEvent, OutboundSseEvent et InboundSseEvent
+* Objet SseEventSink : représentation de la connexion côté serveur
+
+=== JSON-P 1.1
+   * Json-Pointer :
+    syntaxe standardisée pour pointer à un endroit spécifique dans un document json
+    getValue(), add(), replace(), remove()
+    * JSON-Patch : un document appliqué à un autre document pour le modifier
+    le patch est atomique (transaction). Equivalent d'un cvs-patch
+    opérations : add, replace, remove
+    JSonPatchBuilder permet de créer des patch à la volée : modification d'un json par opérations
+    JSON-Merge Patch
+    Possibilité de faire un diff entre 2 documents
+
+=== JSON-B 1.0
+    binding JSON, équivalent de jackson
+    JSON-B customizations :
+    * stratégie de nommage
+    * property ordering
+    * que faire en cas de null
+    * propriétés à ignorer
+    * visibilité,
+    * formats (dates, ...)
+    * ...
+
+=== Servlet 4
+   * HTTP2 supporté
+   * compatibilité ascendante (une servlet 3 tournera sur un serveur JEE 8)
+   * par contre pour faire du push il faut l'implémenter : permet que le serveur envoit en même temps que le html le css et l'image qui correspond même avant que le client les demande. Voir classe PushBuilder
+
+=== JSF 2.3 (spécification terminée depuis semaine dernière)
+   * support websocket,
+   * Meilleure intégration CDI
+
+=== CDI 2.0
+   * N'impacte pas énormément JEE mais permet d'utiliser CDI dans Java SE
+   * Ajout de la possibilité de définir l'ordre de traitement des évènements CDI (annotation @Priority)
+   * Support de l'assynchrone
+
+=== Bean validation 2.0
+   * Gros focus sur l'adoption des nouvelles fonctionnalités adoptées dans JavaSE 8
+
+=== Security API for Java EE
+   * Authentication mechanism
+   * Identity Store (standardiser pour harmoniser les serveur JEE)
+   * Security Context
+
+Public review : avril/mai 2017
+
+Final draft : juin 2017
+
+Final release : juillet 2017

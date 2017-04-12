@@ -1,0 +1,66 @@
+= Mettre en place sa sécurité et gestion d'identité
+:toc:
+:toclevels: 3
+:toc-placement: preamble
+:lb: pass:[<br> +]
+:imagesdir: images
+:icons: font
+:source-highlighter: highlightjs
+
+Par Sébastien Blanc @sebi2706 de chez Redhat, sur la partie KeyCloak + https://cfp.devoxx.fr/2017/talk/MXF-3544/Mettre_en_place_sa_securite_et_sa_gestion_d'identite_en_2017[Descriptif de la conférence sur le site du CFP de Devoxx] +
+
+== Introduction
+Trouver l'équilibre entre l'expérience utilisateur et l'expérience développeur.
+
+Single Sign On est demandé par les utilisateurs
+
+KeyCloak : Serveur d'identité.
+
+Essayer de mettre en place tout seul la sécurité n'est pas une bonne idée.
+Pour faire des économies d'échelle, il faut centraliser la gestion d'identité dans les applications qu'on gère pour ne pas avoir à dupliquer le code dans chaque application.
+
+SAML2 : spec définie en 2005 qui fonctionne avec des tokens mais c'est des token en XML énormes
+
+OAuth 2: framework qui décrit un protocole de délégation d'accès. Pas d'authentification pas d'autorisation
+
+OpenID Connect : surcouche d'OAuth 2 qui définit l'authentification avec un ID Token, Session management for SSO and single logout, user info endpoint, discovery and client self registration
+
+== JWT
+* JsonWebToken : RFC 7519
+* plus compact que le XML
+* Header + payload + signature
+
+=== Header
+* JOSE Header : Javascript Object Signing and Encryption
+* Algorithme utilisé pour la signature
+* Type de token
+
+=== Claims
+* C'est le payload
+* "exp" pour expiration est obligatoire
+* "sub" c'est le username, obligatoire
+
+=== Signature
+Site jwt.io pour coller une version encodée de son JWT et le site décode le JWT.
+
+Un JWT signé est un JWS (Json Web token Signed) et un JWT encodé est un JWE (Json Web token Encoded).
+
+Dans la requête HTTP, rajouter un header "Authorization" avec pour valeur "Bearer tokenDeLutilisateur".
+
+== Keycloak
+* Outil de gestion d'identité OAuth
+* Supporte SAML2, OpenID, Kerberos
+* User federation (LDAP par exemple)
+
+== Adaptateur Java
+* Wildfly / Jboss EAP
+* Tomcat / Jetty
+* Spring Boot / Spring security
+* Generic Servlet Filter
+* Adaptateur JS
+* Adaptateur NodeJS
+
+== Bonnes pratiques
+* Key rotation
+* Brute force detection
+* One time password

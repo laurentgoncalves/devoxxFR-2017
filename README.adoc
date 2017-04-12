@@ -34,7 +34,7 @@
 [cols="1,1,1,4", options="header"] 
 |===
 |Date				|Salle				|Type				|Description
-|11:15 / 12:00		|Neuilly 252 AB	    |Conference 		|Mettre en place sa sécurité et sa gestion d'identité en 2017
+|11:15 / 12:00		|Neuilly 252 AB	    |Conference 		|link:vendredi-securite.adoc[Mettre en place sa sécurité et sa gestion d'identité en 2017]
 |12:05 / 12:20		|Neuilly 251    	|Quickie 			|A la découverte des Observables
 |12:25 / 12:40		|Amphi Maillot		|Quickie		 	|Anonymisation des données
 |12:55 / 13:40		|Paris 241			|Conference 		|Java EE 8? Ah beh non peut-être

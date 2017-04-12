@@ -1,0 +1,67 @@
+= Pattern matching en Java 10
+:toc:
+:toclevels: 3
+:toc-placement: preamble
+:lb: pass:[<br> +]
+:imagesdir: images
+:icons: font
+:source-highlighter: highlightjs
+
+par Remi Forax + https://cfp.devoxx.fr/2017/talk/DHS-1136/Pattern_Matching_en_Java_(10_%3F)[Descriptif de la conférence sur le site du CFP de Devoxx] +
+
+== Introduction
+Disclamer : Cette conf est l'état de là où on en est, mais rien n'est sûr ce qui sera dans java 10
+
+Java10 = Project Valhalla : Value types et generics
+
+Un Object vide est représenté par 64 bits en mémoire (pour hotspot)
+
+Un accès à la mémoire coute cher aujourd'hui en temps comparé aux perf des CPU.
+
+Les tableaux (array) sont des références d'objet donc beaucoup d'accès mémoire.
+
+Trop de références ralenti le GC
+
+== Value types
+Coder comme des classes, mais se comporte comme un int à l'exécution.
+
+"On veut regrouper des choses mais on veut que ça se comporte comme des valeurs"
+
+Problème, le byte code n'est pas fait pour les value types
+
+= Project Panama
+Permettre à Java d'accéder à du code natif sans avoir à générer le stub JNI
+
+Java 10 : Panama et stealth valhalla (value types in the VM)
+
+Java 11 : full valhalla
+
+== Projet Amber
+Rajouter des features pour Java 10
+
+=== Local variable type Inference
+Laisser le compilateur trouver le type des variables
+----
+var a = 3;
+var list = new ArrayList<String>();
+----
+=== Generics in enum
+(pas terrible), d'après Remi c'est sa feature détestée
+
+=== Lambda leftovers
+'_' veut dire unused
+
+Les paramètres des lambda ouvrent un nouveau scope
+
+Une meilleure inférence
+
+=== Pattern matching
+Introduction des hiérarchies fermées : une interface avec des implémentations et il ne pourra pas y avoir d'autre implémentations. Utile dans les switch sur les types, le compilateur peut garantir qu'on traite tous les types puisque la hiérarchie est fermée.
+
+Data class : représentation "bête" d'une donnée
+
+Pb du pattern matching : ça casse l'encapsulation
+
+Déconstructeur : sortir les valeurs (attributs) d'une instance
+
+Le instanceof dans le code généré c'est des if donc c'est pas efficace

@@ -1,0 +1,98 @@
+= Graphql VS Falcor
+:toc:
+:toclevels: 3
+:toc-placement: preamble
+:lb: pass:[<br> +]
+:imagesdir: images
+:icons: font
+:source-highlighter: highlightjs
+
+Par Antoine Cellier et Hugo Wood + https://cfp.devoxx.fr/2017/talk/RIA-2353/GraphQL_vs_Falcor[Descriptif de la conférence sur le site du CFP de Devoxx] +
+
+== Introduction
+Cette conf va étudier les technos REST, GraphQL et Falcor et les confronter.
+
+== GraphQL
+* Langage de requêtage : la requête c'est les clés, la réponse c'est les valeurs
+* GraphQL c'est fait et supporté par Facebook
+* Une lib serveur
+
+== Falcor :
+* la requête contient uniquement les clés mais en plus compact que GraphQL
+* C'est fait par Netflix
+* Ca s'appuie sur un dialecte JSON
+* Une lib serveur et une lib client
+
+== GraphQL et falcor : c'est le client qui pilote
+   * choix des champs
+   * choix des relations
+   * 1 seule requête HTTP : évite plusieurs aller/retour avec le serveur
+
+GraphQL : 
+* nouveau langage
+* typage statique
+* Introspection
+* N implementations
+* Bonne adoption (ex : l'api de github est consultable par GraphQL)
+
+Falcor :
+* JSON
+* Typage dynamique
+* Batching + caching
+* 1 implémentation
+* faible adoption
+
+REST : mise en cache, du coup il ne faut pas voir la même données avec 2 urls différents, attention donc aux urls qui renvoient des listes d'objet, il ne doit y avoir que les ID des objets.
+
+Résultat de falcor un peu plus difficile à exploiter mais mieux pour le cache.
+
+== Bilan 1er use case
+REST RPC : 
+* 1 seule requête
+* rapide à implémenter
+* impossible de faire un cache
+
+Graph QL:
+* 1 seule requete par ecran
+* cache avec lib
+* auto-completion
+* schéma à écrire
+
+Falcor:
+* Une seule requête
+* Cache embarqué
+
+== Bilan 2 eme use case
+REST RPC:
+* Impact du serveur pour une problématique client
+* démultiplication des requêtes en cas de join
+
+Falcor et Graphql
+* sélection des champs
+* join naturel
+
+== Bilan 3 eme use case
+Tout le monde à égalité
+
+== Bilan 4eme use case "ajout de favori"
+Tout le monde à égalité
+
+== Bilan 5ème use case "Interdire l'accès à ma localisation"
+Falcor n'a pas besoin d'une opération alors que GraphQL oui
+
+== Bilan 6eme use case
+GraphQL : param optionnel
+
+Falcor : param obligatoire dans la navigation
+
+== Support, doc
+RPC : simple et familier
+
+REST : tri à faire
+
+GraphQL : en ébullition (facebook communique beaucoup dessus, des meetups, graphql europe, ...)
+
+Falcor : l'avenir nous le dira ... pas tellement de support de Netflix (ils mettent sur github et puis basta)
+
+== Bilan global :
+Graph QL sort son épingle du jeu

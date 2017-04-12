@@ -1,0 +1,67 @@
+= Le Web multi ecran
+:toc:
+:toclevels: 3
+:toc-placement: preamble
+:lb: pass:[<br> +]
+:imagesdir: images
+:icons: font
+:source-highlighter: highlightjs
+
+Présenté par Hubert Sablonière @hsabloniere + https://cfp.devoxx.fr/2017/talk/YOC-1441/Le_Web_multi-ecrans_en_action[Descriptif de la conférence sur le site du CFP de Devoxx] +
+
+== Introduction
+Une plus grande surface de visualisation augmente la productivité.
+Analogie entre une petite table et une grande table pour travailler
+
+* Cas d'usage 1 : ordinateur portable avec ecran supplémentaire.
+Exemple d'usage : sur un écran une fenêtre avec un genre de sql et sur l'autre écran la prévisualisation du résultat
+* Cas d'usage 2 : 2 personnes, 1 sur chaque écran, un écran pour la personne qui gère et un autre qu'on peut tourner pour montrer au client (mode présentateur)
+* Cas d'usage 3 : un ordinateur et un vidéo projecteur
+
+Pour faire dialoguer des fenêtres, il y a 2 question à se poser :
+   * un seul appareil ou plusieurs
+   * un serveur ou pas de serveur
+
+Comment faire avec un seul appareil et sans serveur :
+1ere technique : utiliser window.open pour ouvrir la nouvelle fenêtre et ensuite utiliser l'api postMessage.
+
+Le web multi ecran c'est possible mais le placement multi écran est compliqué...
+bespokeJS est un framework pour faciliter le dialogue
+Avantages : 
+
+   * Cross Origin : on va pouvoir controler une page web ouverte sur une url différente.
+   * Bon support
+   * Serialization des données est auto
+
+par contre :
+
+   * nouvel onglet ou feneêtre 
+   * lien pas toujours fiable
+
+== Storage Event
+
+* Fonctionne avec 2 pages web déjà ouvertes.
+* Le principe est de déposer une donnée dans le localStorage et de l'autre côté mettre en place un StorageEvent pour être notifié lors d'une modification.
+----
+window.addEventListener('storage',...);
+----
+Par contre il n'y a un event que lorsqu'il y a une modification donc si jamais on écrit une donnée déjà présente, il n'y a pas de modification.
+
+Avantages inconvénients :
+   * Ne fonctionne qu'avec la même origin (car localStorage)
+   * Ca a un bon support
+   * Fonctionne avec des onglets déjà existants (Use case de déconnexion sur un onglet qui déconnecte les autres)
+   * Gros hack
+   * Sérialisation à la main
+   * API Bloquante
+
+== Shared Worker
+
+* Thread indépendant de la page web mais commun à toutes les pages de la même origine
+* Mauvais support (et edge ne l'inplémentera pas)
+* Beaucoup de code à implémenter
+
+== Broadcast Channel
+* Création d'un channel et on poste des message
+* De l'autre côté, création du même broadcast channel
+* Super technique

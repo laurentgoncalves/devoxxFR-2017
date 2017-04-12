@@ -1,0 +1,29 @@
+= Democratiser le machine learning avec Tensorflow
+:toc:
+:toclevels: 3
+:toc-placement: preamble
+:lb: pass:[<br> +]
+:imagesdir: images
+:icons: font
+:source-highlighter: highlightjs
+
+Présenté par Loan Tricot + https://cfp.devoxx.fr/2017/talk/XPA-6595/Democratiser_le_machine_learning_avec_TensorFlow[Descriptif de la conférence sur le site du CFP de Devoxx] +
+
+== Introduction
+Le deep learning permet d'abstraire les concepts d'une données ex : à partir d'une image détecter sur c'est des chiens ou des chats.
+
+Encodage one Odd pour caractériser une donnée.
+
+L'objectif est de trouver une fonction f permettant d'exprimer si c'est un chien ou un chat
+
+Opération de convolution, de pool : réduction de résolution et de multiplication matricielle
+
+Convolution : prend une entrée et un noyau qui passe au dessus de l'image
+
+Réduction de résolution : ne garder que les données intéressantes
+
+Reshape : Ecraser en vecteur : concaténer toutes les valeurs dans un vecteur
+
+Multiplication matricielle (opération dense)
+
+

@@ -38,7 +38,7 @@
 |12:05 / 12:20		|Neuilly 251    	|Quickie 			|A la découverte des Observables
 |12:25 / 12:40		|Amphi Maillot		|Quickie		 	|Anonymisation des données
 |12:55 / 13:40		|Paris 241			|Conference 		|link:vendredi-javaee8.adoc[Java EE 8? Ah beh non peut-être]
-|13:55 / 14:40		|Paris 242 AB		|Conference 		|Statistiques ou vie privée ? Les deux !
+|13:55 / 14:40		|Paris 242 AB		|Conference 		|link:vendredi-statistique-vie-privee.adoc[Statistiques ou vie privée ? Les deux !]
 |14:55 / 15:40		|Paris 241			|Conference 		|GraphQL vs Falcor
 |16:10 / 16:55		|Amphi Bleu			|Conference 		|Pattern matching en Java (10?)
 |17:10 / 17:55		|Neuilly 241		|Conference 		|Organiser la logique de votre application Web avec Redux

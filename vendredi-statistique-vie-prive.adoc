@@ -1,0 +1,45 @@
+= Statistiques ou Vie préviée ? Les deux !
+:toc:
+:toclevels: 3
+:toc-placement: preamble
+:lb: pass:[<br> +]
+:imagesdir: images
+:icons: font
+:source-highlighter: highlightjs
+
+Par Mathieu Poumeyrol + https://cfp.devoxx.fr/2017/talk/GLZ-8300/Statistiques_ou_vie_privee_%3F_Les_deux_![Descriptif de la conférence sur le site du CFP de Devoxx] +
+
+== Introduction
+* Privacy analytics : faire des analyses en respectant la vie privée
+* Attention aux opérateurs de collecte de données (Google analytics, ...) qui peuvent extrapoler à partir des données qu'ils collectent grâce à vous. Ces données pourront être utilisées plus tard sans que vous soyez au courant
+
+== Multi party computation
+Traitement sur des données qui sont privées (le contenu n'est pas visible) :
+* Addition, moyenne, histogrammes
+* Principe : rajouter du bruit sur une donnée qui rend son interprétation compliquée mais qui préserve les opérations basiques
+
+Clercs : gens qui recoivent un bout de secret inutilisable en tant que tel mais qui ensemble reconstituent le secret
+
+== Shamir Secret sharing
+* Shamir : c'est le S de RSA
+* Principe : Cacher des secrets dans des polynomes
+* Les polynomes sont additifs
+
+== Comment mettre tout ça en place :
+Les téléphones calcule une portion de secret et envoient à un serveur qui transfère à un clerc et pour que le serveur ne voit pas le contenu, les portions sont cryptées pour que seul le clerc de destination puisse lire la portion
+
+On arrive à une solution capable de faire des sommes privées.
+
+Comment avoir des clercs sécurisés ?
+Utiliser du Crowd sourcing clercs : des utilisateurs anonymes, nombreux, ça rend compliqué de corrompre de nombreux utilisateurs plutôt qu'un faible nombre.
+On peut également mixer entre des clercs reconnus et des anonymes.
+
+Privacy by design : collecter exactement ce qu'on veut mesurer et pas plus.
+
+Par exemple, savoir qui est français et qui vit à Paris, on va uniquement recueillir ces 2 infos des utilisateurs.
+
+Attention, la combinatoire peut très vite être élevée !
+
+Utilisatin de RUST
+
+Google publie Google Distributed Machine Learning : Il y a un problème de privacy dans leur modèle relevé par le speaker et qui justifie selon lui sa solution et son entreprise...

@@ -1,0 +1,29 @@
+= Java 9 : comment gérer des grosses heap
+:toc:
+:toclevels: 3
+:toc-placement: preamble
+:lb: pass:[<br> +]
+:imagesdir: images
+:icons: font
+:source-highlighter: highlightjs
+
+Présenté par Romain Colle + https://cfp.devoxx.fr/2017/talk/CVX-9349/Java_9_a_la_poursuite_des_grands_heaps[Descriptif de la conférence sur le site du CFP de Devoxx] +
+
+== Introduction
+* 10 To dans une JVM
+* VOLTDB
+* SAPHana
+* Redis, Hazelcast : caches distribués
+* Spark : accélérer les batch big data
+
+== Off-Heap management
+* Un processeur est associé à une barette mémoire (NUMA architecture)
+* G1 : le garbage collector de Java 9
+* Avant, le temps de pause du GC dépendait de la taille de la heap
+* G1 change ça en divisant la heap en de nombreuses régions qu'il traite en //
+* G1 disponible depuis Java 7 mais mature que maintenant et par défaut dans Java 9
+
+Work stealing pour partager le travail de GC entre thread de GC.
+
+Implémentation Lock Free avec des Compare and Swap pour que tous les threads du GC puissent accéder à la même shared stack
+
